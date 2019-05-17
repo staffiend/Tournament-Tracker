@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TrackerLibrary;
+using TrackerLibrary.DataAccess;
+using TrackerLibrary.Models;
 
 namespace TrackerUI
 {
@@ -23,6 +25,12 @@ namespace TrackerUI
 
         }
 
+        /// <summary>
+        /// When button is clicked, creates a prize and saves it to database
+        /// if data is valid.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void createPrizeButton_Click(object sender, EventArgs e)
         {
             if(ValidateForm())
@@ -33,10 +41,7 @@ namespace TrackerUI
                     prizeAmountValue.Text, 
                     prizePercentageValue.Text);
 
-                foreach(IDataConnection db in GlobalConfig.Connections)
-                {
-                    db.CreatePrize(model);
-                }
+                GlobalConfig.Connection.CreatePrize(model);
 
                 placeNameValue.Text = "";
                 placeNumberValue.Text = "";
@@ -49,6 +54,10 @@ namespace TrackerUI
             }
         }
 
+        /// <summary>
+        /// Validates input data from the form.
+        /// </summary>
+        /// <returns></returns>
         private bool ValidateForm()
         {
             bool output = true;
