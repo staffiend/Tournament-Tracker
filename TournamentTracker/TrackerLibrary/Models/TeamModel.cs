@@ -16,7 +16,7 @@ namespace TrackerLibrary.Models
         /// <summary>
         /// Represents the name of the team.
         /// </summary>
-        public string TeamName { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Represents the members of the team.

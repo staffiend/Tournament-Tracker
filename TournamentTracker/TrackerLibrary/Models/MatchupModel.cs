@@ -9,9 +9,19 @@ namespace TrackerLibrary.Models
     public class MatchupModel
     {
         /// <summary>
+        /// The unique identifier for the matchup.
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
         /// Represents matchups of teams entered in tournament.
         /// </summary>
         public List<MatchupEntryModel> Entries { get; set; } = new List<MatchupEntryModel>();
+
+        /// <summary>
+        /// The ID from the database that will be used to identify the winner.
+        /// </summary>
+        public int WinnerId { get; set; }
 
         /// <summary>
         /// Represents the winning team of this matchup.
@@ -22,5 +32,34 @@ namespace TrackerLibrary.Models
         /// Represents the round the matchup is taking place in.
         /// </summary>
         public int MatchupRound { get; set; }
+
+        public string DisplayName
+        {
+            get
+            {
+                string output = "";
+                foreach(MatchupEntryModel me in Entries)
+                {
+                    if (me.TeamCompeting != null)
+                    {
+                        if (output.Length == 0)
+                        {
+                            output = me.TeamCompeting.Name;
+                        }
+                        else
+                        {
+                            output += $" vs. {me.TeamCompeting.Name}";
+                        } 
+                    }
+                    else
+                    {
+                        output = "Matchup not yet determined.";
+                        break;
+                    }
+                }
+
+                return output;
+            }
+        }
     }
 }
